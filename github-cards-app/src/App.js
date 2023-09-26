@@ -21,7 +21,7 @@ const testData = [
 
 const CardList = (props) => (
   <div>
-    {testData.map((profile) => (
+    {props.profiles.map((profile) => (
       <Card {...profile} />
     ))}
   </div>
@@ -32,7 +32,10 @@ class Card extends React.Component {
     const profile = this.props;
     return (
       <div className="github-profile">
-        <img alt="profile of github user" src={profile.avatar_url} />
+        <img
+          alt={`profile of github user ${profile.name}`}
+          src={profile.avatar_url}
+        />
         <div className="info">
           <div className="name">{profile.name}</div>
           <div className="company">{profile.company}</div>
@@ -42,12 +45,28 @@ class Card extends React.Component {
   }
 }
 
+class Form extends React.Component {
+  render() {
+    return (
+      <form action="">
+        <input type="text" placeholder="GitHub username" />
+        <button>Add card</button>
+      </form>
+    );
+  }
+}
+
 class App extends React.Component {
+  state = {
+    profiles: testData,
+  };
+
   render() {
     return (
       <div>
         <div className="header">{this.props.title}</div>
-        <CardList />
+        <Form />
+        <CardList profiles={this.state.profiles} />
       </div>
     );
   }
