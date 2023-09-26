@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+import axios from "axios";
 
 const testData = [
   {
@@ -46,10 +47,21 @@ class Card extends React.Component {
 }
 
 class Form extends React.Component {
+  state = { userName: "" };
+  handleSubmit = (event) => {
+    event.preventDefault();
+    axios.get(`https://api.github.com/users/${this.state.userName}`);
+  };
   render() {
     return (
-      <form action="">
-        <input type="text" placeholder="GitHub username" />
+      <form onSubmit={this.handleSubmit}>
+        <input
+          type="text"
+          value={this.state.userName}
+          onChange={(event) => this.setState({ userName: event.target.value })}
+          placeholder="GitHub username"
+          required
+        />
         <button>Add card</button>
       </form>
     );
